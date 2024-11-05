@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selenium ID Locator Exercise</title>
+</head>
+<body>
+    <h1 id="header">Selenium ID Locator Exercise</h1>
+    <input type="text" id="inputField" placeholder="Enter something...">
+    <button id="submitButton">Submit</button>
+    <script>
+        document.getElementById('submitButton').onclick = function() {
+            var inputValue = document.getElementById('inputField').value;
+            document.getElementById('output').innerText = "You entered: " + inputValue;
+        };
+    </script>
+</body>
+</html>

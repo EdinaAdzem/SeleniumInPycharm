@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XPath Expressions Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #444;
+        }
+        code {
+            display: block;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            color: #007b5e;
+        }
+    </style>
+</head>
+<body>
+
+<h1>XPath Expressions  - Task 3 - 1-15</h1>
+
+<h2>1. Main Heading (h1) Element</h2>
+<code>//h1[@id='mainTitle']</code>
+
+<h2>2. "About Us" Navigation Link</h2>
+<code>//a[text()='About Us']</code>
+
+<h2>3. "Graphic Design" Dropdown Link</h2>
+<code>//a[text()='Graphic Design']</code>
+
+<h2>4. Team Member’s Name "Jane Smith"</h2>
+<code>//h4[text()='Jane Smith']</code>
+
+<h2>5. Description for "SEO Services" (Paragraph Element)</h2>
+<code>//h3[text()='SEO Services']/following-sibling::p</code>
+
+<h2>6. All Service Items in the "Our Services" Section</h2>
+<code>//section[@id='services']//div[@class='service-item']</code>
+
+<h2>7. Email Input Field in the Contact Form</h2>
+<code>//input[@type='email' and @id='email']</code>
+
+<h2>8. Entire Contact Form</h2>
+<code>//form[@id='contactForm']</code>
+
+<h2>9. Footer Paragraph Element</h2>
+<code>//footer/p</code>
+
+<h2>10. First Team Member's Name (h4)</h2>
+<code>(//div[@class='team']//h4)[1]</code>
+
+<h2>11. Description of the Second Service Item</h2>
+<code>(//div[@class='service-item']/p)[2]</code>
+
+<h2>12. "Contact Us" Section Header (h2)</h2>
+<code>//section[@id='contact']//h2</code>
+
+<h2>13. All Links in the "Services" Dropdown Menu</h2>
+<code>//a[text()='Services']/following-sibling::ul[@class='dropdown']//a</code>
+
+<h2>14. First List Item (li) Under "Our Team" Section</h2>
+<code>(//div[@class='team']//li)[1]</code>
+
+<h2>15. "Send Message" Button in the Contact Form</h2>
+<code>//form[@id='contactForm']//input[@type='submit' and @value='Send Message']</code>
+
+</body>
+</html>
