@@ -32,4 +32,3 @@ print("Logged in page title:", driver.title)
 
 
 driver.quit()
-
