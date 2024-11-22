@@ -4,42 +4,42 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# 1. Launch browser and navigate to URL
+# 1.load the URL
 url = 'http://automationexercise.com'
 driver = webdriver.Chrome()
 driver.maximize_window()
 driver.get(url)
 
 try:
-    # 2. Handle consent popup if it appears
+    # Handle consent popup if it appears
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "/html/body/div/div[2]/div[1]/div[2]/div[2]/button[1]/p"))
+        EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Consent')]"))
     ).click()
 
-    # 3. Verify Home Page is visible
+    # Wait for the overlay to disappear (if it appears)
     WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.XPATH, "//h2[contains(text(),'Full-Fledged practice website for Automation testing')]"))
+        EC.invisibility_of_element_located((By.CLASS_NAME, "fc-dialog-overlay"))
     )
-    print("Home Page is visible")
 
-    # 4. Click on 'Signup / Login' button using the provided XPath for register button
-    signup_login_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, '//*[@id="header"]/div/div/div/div[2]/div/ul/li[4]/a'))
+    # find and click the login and sign button best located with xpath
+    login_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[@href='/login' and contains(., 'Signup / Login')]"))
     )
-    signup_login_button.click()
 
-    # 5. Verify 'New User Signup!' is visible
+    driver.execute_script("arguments[0].click();", login_button)
+
+
+    # 5 check if the 'New User Signup!' is visible
     WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//h2[contains(text(),'New User Signup!')]"))
     )
     print("New User Signup! is visible")
 
     # 6. Enter name and email address using the provided XPaths
-    # Enter the name in the name input field
-    name_field = driver.find_element(By.XPATH, '//*[@id="form"]/div/div/div[3]/div/form/input[2]')
+    name_field = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, '//*[@id="form"]/div/div/div[3]/div/form/input[2]'))
+    )
     name_field.send_keys('Collamity Jane')
-
-    # Enter the email in the email input field
     email_field = driver.find_element(By.XPATH, '//*[@id="form"]/div/div/div[3]/div/form/input[3]')
     email_field.send_keys('collamity.jane@example.com')
 
@@ -47,71 +47,65 @@ try:
     signup_button = driver.find_element(By.XPATH, "//*[@id='form']/div/div/div[3]/div/form/button")
     signup_button.click()
 
+
     # 8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
     WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//h2[contains(text(),'Enter Account Information')]"))
     )
     print("ENTER ACCOUNT INFORMATION is visible")
 
-    # 9. Fill details: Title, Name, Email, Password, Date of birth
-    title_radio_button = driver.find_element(By.XPATH, "//*[@id='uniform-id_gender1']")
-    title_radio_button.click()  # Select Mr.
+    # fill in the account form
+    title_radio_button = driver.find_element(By.ID, "uniform-id_gender1")
+    title_radio_button.click()
 
-    # Fill Name, Email, and Password
-    name_field = driver.find_element(By.XPATH, "//*[@id='account_creation']/div[1]/div[1]/input")
-    name_field.send_keys("Calamity Jane")  # Updated to Calamity Jane
-
-    password_field = driver.find_element(By.XPATH, "//*[@id='account_creation']/div[1]/div[2]/input")
-    password_field.send_keys("password123")
-
-    # Select Date of Birth
-    dob_day = driver.find_element(By.XPATH, "//*[@id='uniform-days']")
+    name_field = driver.find_element(By.ID, "customer_firstname")
+    name_field.send_keys("Calamity")
+    last_name_field = driver.find_element(By.ID, "customer_lastname")
+    last_name_field.send_keys("Jane")
+    password_field = driver.find_element(By.ID, "passwd")
+    password_field.send_keys("password123Jane")
+    dob_day = driver.find_element(By.ID, "days")  # Optimized to use ID
     dob_day.click()
-
     # 10. Select checkbox 'Sign up for our newsletter!'
-    newsletter_checkbox = driver.find_element(By.XPATH, "//*[@id='uniform-newsletter']")
+    newsletter_checkbox = driver.find_element(By.ID, "newsletter")  # Optimized to use ID
     newsletter_checkbox.click()
 
     # 11. Select checkbox 'Receive special offers from our partners!'
-    offers_checkbox = driver.find_element(By.XPATH, "//*[@id='uniform-optin']")
+    offers_checkbox = driver.find_element(By.ID, "optin")  # Optimized to use ID
     offers_checkbox.click()
 
-    # 12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
-    first_name_field = driver.find_element(By.XPATH, "//*[@id='customer_firstname']")
-    first_name_field.send_keys("Calamity")
-
-    last_name_field = driver.find_element(By.XPATH, "//*[@id='customer_lastname']")
-    last_name_field.send_keys("Jane")
-
-    company_field = driver.find_element(By.XPATH, "//*[@id='company']")
-    company_field.send_keys("Wild West Inc.")
-
-    address1_field = driver.find_element(By.XPATH, "//*[@id='address1']")
+    # 12. Fill details: Address, Country, State, City, Zipcode, Mobile Number
+    address1_field = driver.find_element(By.ID, "address1")  # Optimized to use ID
     address1_field.send_keys("123 Wild West St.")
 
-    address2_field = driver.find_element(By.XPATH, "//*[@id='address2']")
+    address2_field = driver.find_element(By.ID, "address2")  # Optimized to use ID
     address2_field.send_keys("Apt 5A")
 
-    country_dropdown = driver.find_element(By.XPATH, "//*[@id='uniform-id_country']")
+    # Country Dropdown (Using ID for optimization)
+    country_dropdown = driver.find_element(By.ID, "id_country")
     country_dropdown.click()
 
-    state_field = driver.find_element(By.XPATH, "//*[@id='id_state']")
+    # State (If using dropdown, you can select a value here or type it)
+    state_field = driver.find_element(By.ID, "id_state")
     state_field.send_keys("Arizona")
 
-    city_field = driver.find_element(By.XPATH, "//*[@id='city']")
-    city_field.send_keys("Tombstone")
+    # City field
+    city_field = driver.find_element(By.ID, "city")
+    city_field.send_keys("Dublin")
 
-    zipcode_field = driver.find_element(By.XPATH, "//*[@id='zipcode']")
-    zipcode_field.send_keys("85638")
+    # Zipcode
+    zipcode_field = driver.find_element(By.ID, "zipcode")
+    zipcode_field.send_keys("72160")
 
-    mobile_number_field = driver.find_element(By.XPATH, "//*[@id='mobile_number']")
+    # Mobile Number field
+    mobile_number_field = driver.find_element(By.ID, "mobile_number")
     mobile_number_field.send_keys("1234567890")
 
     # 13. Click 'Create Account' button
-    create_account_button = driver.find_element(By.XPATH, "//*[@id='submitAccount']")
+    create_account_button = driver.find_element(By.ID, "submitAccount")
     create_account_button.click()
 
-    # 14. Verify that 'ACCOUNT CREATED!' is visible
+    # 14. check if  'ACCOUNT CREATED!' is visible
     WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//b[contains(text(),'Account Created!')]"))
     )
@@ -142,6 +136,7 @@ try:
 
 except Exception as e:
     print("Test Failed:", e)
+
 finally:
     # Add a delay before quitting the browser to view the result
     time.sleep(5)
