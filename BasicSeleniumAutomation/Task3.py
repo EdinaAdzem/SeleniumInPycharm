@@ -6,7 +6,7 @@ import time
 
 #LinkedIn credentials
 linkedin_email = "edina.plakalo@gmail.com"
-linkedin_password = "Piramida2026!@"
+linkedin_password = "********"
 
 
 driver = webdriver.Chrome()
